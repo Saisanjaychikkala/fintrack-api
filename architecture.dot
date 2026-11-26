@@ -1,0 +1,15 @@
+digraph FinTrack {
+  rankdir=TB; graph [bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", fontname="Arial", label="FinTrack API — Layered Architecture and Data Flow", labelloc="t", fontsize=18];
+  node [shape=box, style="rounded,filled", fillcolor="#EAF2FF", color="#3B5B92", fontname="Arial", fontsize=10, margin="0.16,0.10"];
+  edge [color="#53657D", fontname="Arial", fontsize=9, arrowsize=0.7];
+  client [label="Authenticated Client\nHTTP Basic (demo)", fillcolor="#F1F3F5"];
+  controller [label="REST Controllers\nTransactionController / ExpenseController"];
+  validation [label="DTO Validation\nJakarta Bean Validation", fillcolor="#FFF4DB", color="#A67C26"];
+  service [label="Service Layer\nTransactionService / BalanceCalculationService"];
+  repository [label="Spring Data JPA Repositories"];
+  db [shape=cylinder, label="H2 (local) / RDBMS (production)", fillcolor="#E7F6EC", color="#42875A"];
+  model [label="JPA Entities\nTransaction / SharedExpense / ExpenseParticipant", fillcolor="#F3E8FF", color="#7952A4"];
+  client -> controller -> validation -> service -> repository -> db;
+  repository -> model [dir=both, label="maps entities"];
+  service -> client [style=dashed, label="DTO response", constraint=false];
+}
